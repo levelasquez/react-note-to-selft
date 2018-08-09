@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Form, FormControl, Button } from 'react-bootstrap'
+import Note from './Note'
 
 class App extends Component {
   state = {
@@ -29,7 +30,7 @@ class App extends Component {
           <Button onClick={this.handleSubmit}>Submit</Button>
         </Form>
         {notes.map((note, index) => (
-          <div key={`${note}-${index}`}>{note}</div>
+          <Note key={`${note}-${index}`} note={note} />
         ))}
       </div>
     )
