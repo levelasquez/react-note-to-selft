@@ -36,4 +36,44 @@ describe('App component', () => {
       expect(submitButtonText).toEqual('Submit')
     })
   })
+
+  describe('creating a note', () => {
+    const testNote = 'test note'
+
+    beforeEach(() => {
+      app.find('FormControl').simulate('change', {
+        target: { value: testNote },
+      })
+    })
+
+    it('updates the text in state', () => {
+      const { text } = app.state()
+      
+      expect(text).toEqual(testNote)
+    })
+
+    describe('submitting a new note', () => {
+      beforeEach(() => {
+        app.find('.btn').at(0).simulate('click')
+      })
+
+      it('adds the new note to state', () => {
+        const { notes: [note] } = app.state()
+
+        expect(note).toEqual(testNote)
+      })
+    })
+
+    describe('clearing the notes', () => {
+      beforeEach(() => {
+        app.find('.btn').at(1).simulate('click')
+      })
+
+      it('clears the note in state', () => {
+        const { notes } = app.state()
+        
+        expect(notes).toEqual([])
+      })
+    })
+  })
 })
