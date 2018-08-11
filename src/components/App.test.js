@@ -48,7 +48,7 @@ describe('App component', () => {
 
     it('updates the text in state', () => {
       const { text } = app.state()
-      
+
       expect(text).toEqual(testNote)
     })
 
@@ -57,22 +57,41 @@ describe('App component', () => {
         app.find('.btn').at(0).simulate('click')
       })
 
+      afterEach(() => {
+        app.find('.btn').at(1).simulate('click')
+      })
+
       it('adds the new note to state', () => {
         const { notes: [note] } = app.state()
 
         expect(note).toEqual(testNote)
       })
-    })
 
-    describe('clearing the notes', () => {
-      beforeEach(() => {
-        app.find('.btn').at(1).simulate('click')
+
+      describe('remounting the component', () => {
+        let app2
+
+        beforeEach(() => {
+          app2 = mount(<App />)
+        })
+
+        it('reads the stored note cookies', () => {
+          const { notes: [note] } = app2.state()
+
+          expect(note).toEqual(testNote)
+        })
       })
 
-      it('clears the note in state', () => {
-        const { notes } = app.state()
-        
-        expect(notes).toEqual([])
+      describe('clearing the notes', () => {
+        beforeEach(() => {
+          app.find('.btn').at(1).simulate('click')
+        })
+
+        it('clears the note in state', () => {
+          const { notes } = app.state()
+
+          expect(notes).toEqual([])
+        })
       })
     })
   })
